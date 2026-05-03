@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Low-Dimensional Stack — Structure-Centric ML</title>
+<meta name="description" content="Structure-Centric Machine Learning: a new paradigm for native-dimensional clustering. AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand">Structure<span class="accent">·</span>Centric ML</a>
+    <nav>
+      <a href="paradigm.html"   >Paradigm</a>
+      <a href="low-d.html"      class="current">Low-D Stack</a>
+      <a href="high-d.html"     >High-D Stack</a>
+      <a href="validation.html" >Validation</a>
+      <a href="roadmap.html"    >Roadmap</a>
+      <a href="publications.html" >Publications</a>
+      <a href="about.html"      >About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="issue-plate">
+    <div>Field Note No. 03 &nbsp;·&nbsp; Structure-Centric ML</div>
+    <div class="right">arXiv: 2603.13339 &nbsp;·&nbsp; A. Elmahdi, PhD</div>
+  </div>
+  <div class="page-hero">
+    <div class="kicker">When dimensionality reduction is part of the pipeline, this is the stack.</div>
+    <h1>The Low-Dimensional <span class="em">Stack.</span></h1>
+    <p class="lede">Three components — SCOPE, AdaBox, SLCD — operating together to produce structure-centric clusters in two-dimensional spaces. The strongest known pipeline for any application where UMAP, PCA, or t-SNE precede clustering: text analytics, social listening, customer segmentation, and the entire BERTopic ecosystem.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">The Stack</div>
+    <h2>Three components. <span class="em">One end-to-end pipeline.</span></h2>
+
+    <div class="stack mt-6">
+      <div class="layer">
+        <div class="num">01</div>
+        <div>
+          <h3>SCOPE</h3>
+          <div class="role">Decomposable supervised evaluation framework</div>
+          <p>
+            A five-component metric that evaluates clustering quality and identifies which structural
+            property is failing when quality drops: Core Purity, Boundary Recall, Cluster Precision,
+            Noise F1, and Count Accuracy. Compatible with any density-based algorithm. <strong>SCOPE is the
+            tuning objective &mdash; replacing ARI as the optimization target produces clusters that match
+            ground truth more reliably than ARI itself does.</strong>
+          </p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="num">02</div>
+        <div>
+          <h3>AdaBox</h3>
+          <div class="role">Two-dimensional structure-centric clustering algorithm</div>
+          <p>
+            The foundation algorithm of the structure-centric family. Operates on a kNN graph of the
+            two-dimensional data. Produces zero noise points by default. <strong>Parameters are scale-invariant</strong>
+            &mdash; the same configuration works whether the dataset has 1,000 or 1,000,000 points. Validated
+            against HDBSCAN across 111 benchmark datasets.
+          </p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="num">03</div>
+        <div>
+          <h3>SLCD</h3>
+          <div class="role">Sample-Label-Calibrate-Deploy parameter transfer</div>
+          <p>
+            Tune AdaBox parameters on a 1,000-point sample. Deploy those exact parameters to a
+            500,000-point dataset. Quality is preserved &mdash; mean Δ ARI of <strong>+0.027</strong> across
+            tested datasets, while DBSCAN loses <strong>0.404</strong> and HDBSCAN loses <strong>0.475</strong>
+            in ARI when their parameters are transferred at scale.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mt-6">
+      <div class="pull">The low-D stack solves the deployment problem, not just the clustering problem. SCOPE picks the right parameters. AdaBox finds the structure. SLCD scales it without re-tuning.</div>
+      <div class="attribution">— Low-D stack architecture</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">Evidence — Real Text Data</div>
+    <h2>BERTopic pipeline, four datasets, four methods.</h2>
+    <p>
+      The standard text clustering pipeline in production today is BERTopic: sentence-BERT embeddings →
+      UMAP to two dimensions → HDBSCAN. This is the pipeline that powers most social listening platforms,
+      trend detection systems, and topic modeling tools. The benchmark below replaces only the final clustering
+      step. Ada2D and AdaHD are scored on the same UMAP-reduced 2D data that HDBSCAN operates on.
+    </p>
+
+    <figure>
+      <img src="assets/curated/text_heatmap_ari_scope.png" alt="ARI and SCOPE heatmap across 4 text datasets and 4 methods"/>
+      <figcaption>
+        Adjusted Rand Index (left) and SCOPE score (right) across four real-world text datasets.
+        AdaHD wins ARI on three of four datasets and SCOPE on all four.
+        <span class="src">Source: Multi_Dataset_Text_Benchmark.ipynb</span>
+      </figcaption>
+    </figure>
+
+    <h3 style="margin-top: 48px; font-size: 26px;">Average across all four datasets</h3>
+    <table class="mt-4">
+      <thead>
+        <tr><th>Method</th><th class="num">Avg ARI</th><th class="num">Avg SCOPE</th><th>Style</th></tr>
+      </thead>
+      <tbody>
+        <tr class="bg-row"><td><strong>AdaHD</strong> (high-D structure-centric)</td><td class="num win"><strong>0.5015</strong></td><td class="num win"><strong>0.7604</strong></td><td>Native HD</td></tr>
+        <tr><td><strong>Ada2D</strong> (low-D structure-centric)</td><td class="num">0.4261</td><td class="num">0.5766</td><td>UMAP → AdaBox</td></tr>
+        <tr><td>HDBSCAN* (tuned)</td><td class="num">0.3611</td><td class="num">0.3595</td><td>UMAP → HDBSCAN, hyper-tuned</td></tr>
+        <tr><td>HDBSCAN (default)</td><td class="num">0.3516</td><td class="num">0.3017</td><td>UMAP → HDBSCAN, default</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="mt-6">
+      <img src="assets/curated/text_20ng_6cat_scatter.png" alt="20-Newsgroups 6-category UMAP scatter, ground truth vs HDBSCAN vs HDBSCAN* vs Ada2D vs AdaHD"/>
+      <figcaption>
+        20 Newsgroups (6 categories, n=5,581) — UMAP 2D projection. <strong>HDBSCAN finds k=13 with 8% noise (ARI 0.821);
+        HDBSCAN* fragments to k=50 with 56% noise (ARI 0.225); Ada2D finds k=4 with 0% noise; AdaHD finds k=7 with 0% noise (ARI 0.751).</strong>
+        <span class="src">Source: Multi_Dataset_Text_Benchmark.ipynb (img-003)</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">SCOPE Decomposability</div>
+    <h2>When clustering quality drops, you know <span class="em">which</span> property failed.</h2>
+    <p>
+      Existing supervised clustering metrics &mdash; ARI, NMI, V-Measure &mdash; produce a single score.
+      A bad score tells you something is wrong, but not what. SCOPE produces five independent components
+      that each measure a distinct structural property of the result:
+    </p>
+    <table class="mt-6">
+      <thead>
+        <tr><th>Component</th><th>Measures</th><th>Diagnostic</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Core Purity</strong></td><td>How clean are dense interior regions?</td><td>Low → over-merging of distinct clusters</td></tr>
+        <tr><td><strong>Boundary Recall</strong></td><td>Are points near edges correctly placed?</td><td>Low → algorithm is too cautious at edges</td></tr>
+        <tr><td><strong>Cluster Precision</strong></td><td>Do clusters correspond 1:1 with truth?</td><td>Low → fragmentation</td></tr>
+        <tr><td><strong>Noise F1</strong></td><td>Are noise points correctly identified?</td><td>Low → either over- or under-discarding</td></tr>
+        <tr><td><strong>Count Accuracy</strong></td><td>Is k correct?</td><td>Low → wrong number of clusters</td></tr>
+      </tbody>
+    </table>
+    <p class="mt-6">
+      A single SCOPE score of 0.55 on a difficult dataset is not informative on its own. But knowing that
+      Core Purity is 0.92 while Cluster Precision is 0.30 tells you exactly that the algorithm is
+      fragmenting good clusters &mdash; not over-merging them, not picking up noise. <strong>That diagnostic
+      capability is what makes SCOPE useful as a tuning objective.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">Evidence — SLCD Scale</div>
+    <h2>From a 1,000-point sample to half a million points <span class="em">without re-tuning.</span></h2>
+    <figure>
+      <img src="assets/curated/slcd_protocol_a.png" alt="SLCD protocol A results: AdaBox, DBSCAN, HDBSCAN deployment quality"/>
+      <figcaption>
+        <strong>Protocol A: Sample tuning, full-dataset deployment.</strong> Across 10 real-world datasets, AdaBox sample-tuned
+        configurations transfer cleanly to the full data (Δ ARI +0.027 on average). DBSCAN loses 0.404 and
+        HDBSCAN loses 0.475 in ARI under the same protocol. SLCD's parameter transfer is uniquely enabled by
+        AdaBox's scale-invariant parameters.
+        <span class="src">Source: AdaBox_KDD2026_Experimental_Notebook (img-056)</span>
+      </figcaption>
+    </figure>
+
+    <div class="stat-grid mt-6">
+      <div class="stat">
+        <div class="num">+0.027</div>
+        <div class="label">AdaBox average Δ ARI</div>
+        <div class="desc">Scale-invariant parameters transfer cleanly.</div>
+      </div>
+      <div class="stat">
+        <div class="num">−0.404</div>
+        <div class="label">DBSCAN average Δ ARI</div>
+        <div class="desc">Distance parameters fail at scale.</div>
+      </div>
+      <div class="stat">
+        <div class="num">−0.475</div>
+        <div class="label">HDBSCAN average Δ ARI</div>
+        <div class="desc">Mutual reachability distance does not survive transfer.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">When To Use This Stack</div>
+    <h2>The Low-D stack is the strongest choice when&hellip;</h2>
+    <p>
+      &bull; The pipeline already includes UMAP, PCA, t-SNE, or another dimensionality reduction step.
+      <br/>&bull; The data has under ~30 informative dimensions in its raw form.
+      <br/>&bull; The deployment target requires a 2D visualization of the clustering.
+      <br/>&bull; The application is text/topic clustering using sentence-BERT or similar embeddings (the BERTopic case).
+      <br/>&bull; Customer segmentation, behavioral clustering, or trend detection on signal vectors.
+    </p>
+    <p>
+      For text and social-listening applications, the Low-D stack is a direct drop-in replacement for the
+      HDBSCAN step in any UMAP-then-HDBSCAN pipeline. Integration cost: hours, not weeks.
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>Structure-Centric Machine Learning</h4>
+      <p class="credit">A research program by Ahmed Elmahdi, PhD<br/>
+      Inventor of AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD,<br/>
+      and the Density-Aware Sampler.</p>
+    </div>
+    <div>
+      <h4>The Stack</h4>
+      <ul>
+        <li><a href="paradigm.html">The Paradigm</a></li>
+        <li><a href="low-d.html">Low-Dimensional Stack</a></li>
+        <li><a href="high-d.html">High-Dimensional Stack</a></li>
+        <li><a href="validation.html">Cross-Domain Validation</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="roadmap.html">Research Roadmap</a></li>
+        <li><a href="publications.html">Publications &amp; Patents</a></li>
+        <li><a href="about.html">About &amp; Contact</a></li>
+        <li><a href="https://arxiv.org/abs/2603.13339">arXiv: 2603.13339</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">© 2026 &nbsp;·&nbsp; structurecentricml.com &nbsp;·&nbsp; All rights reserved</div>
+</footer>
+</body></html>

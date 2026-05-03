@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>A new paradigm for native-dimensional clustering — Structure-Centric ML</title>
+<meta name="description" content="Structure-Centric Machine Learning: a new paradigm for native-dimensional clustering. AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand">Structure<span class="accent">·</span>Centric ML</a>
+    <nav>
+      <a href="paradigm.html"   >Paradigm</a>
+      <a href="low-d.html"      >Low-D Stack</a>
+      <a href="high-d.html"     >High-D Stack</a>
+      <a href="validation.html" >Validation</a>
+      <a href="roadmap.html"    >Roadmap</a>
+      <a href="publications.html" >Publications</a>
+      <a href="about.html"      >About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="issue-plate">
+    <div>Field Note No. 01 &nbsp;·&nbsp; Structure-Centric ML</div>
+    <div class="right">arXiv: 2603.13339 &nbsp;·&nbsp; A. Elmahdi, PhD</div>
+  </div>
+
+  <div class="page-hero">
+    <div class="kicker">For thirty years, density-based clustering has measured distance.</div>
+    <h1>It should have been measuring <span class="em">structure.</span></h1>
+    <p class="lede">
+      Structure-Centric Machine Learning is a new paradigm for unsupervised data analysis. It resolves three
+      problems that DBSCAN (1996) and HDBSCAN (2013) never could: clustering in native high dimensions without
+      reduction, retaining every data point instead of discarding noise, and transferring tuned parameters across
+      dataset scales without re-tuning.
+    </p>
+  </div>
+
+  <figure class="full-bleed">
+    <img src="assets/curated/hero_takeaway.png" alt="Side-by-side comparison: HDBSCAN finds 64 clusters and discards 30% of data; AdaGraph finds 7 clusters with zero data loss"/>
+  </figure>
+</div>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">The Result</div>
+    <h2>One algorithm found seven.<br/>The other found <span class="em">sixty-four</span> &mdash; and discarded a third of the data.</h2>
+    <p style="max-width: 820px; margin-top: 28px;">
+      The same dataset. The same sentence-BERT embeddings. The same UMAP pipeline. The only variable was the
+      clustering algorithm. HDBSCAN &mdash; the industry standard for a decade &mdash; produced 64 fragments and threw
+      30.4% of the data into a noise pile. <strong>AdaGraph</strong>, built on the structure-centric paradigm,
+      produced 7 clean clusters with zero data discarded. ARI: 0.751 vs 0.464.
+    </p>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="num">+24<span class="unit">– 62%</span></div>
+        <div class="label">ARI improvement on text</div>
+        <div class="desc">Across four real-world datasets, AdaHD averages 0.50 ARI vs 0.35 for HDBSCAN.</div>
+      </div>
+      <div class="stat">
+        <div class="num">0%</div>
+        <div class="label">Data discarded as noise</div>
+        <div class="desc">Every point gets assigned to a cluster. No silent signal loss.</div>
+      </div>
+      <div class="stat">
+        <div class="num">5,000<span class="unit">D</span></div>
+        <div class="label">Native dimensionality</div>
+        <div class="desc">Graph-SCOPE holds at τ ≈ 0.95 where Silhouette collapses to 0.46.</div>
+      </div>
+      <div class="stat">
+        <div class="num">3<span class="unit">domains</span></div>
+        <div class="label">Independent validation</div>
+        <div class="desc">Text, cancer genomics, materials science. Same structural advantages.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">The Argument</div>
+    <h2>Distance fails. <span class="em">Structure</span> doesn't.</h2>
+    <p>
+      In high dimensions, every point is roughly equidistant from every other point. This is the textbook
+      "curse of dimensionality," and it's the reason every modern clustering pipeline ends with the same
+      preprocessing step: <em>reduce the dimensions first, then cluster</em>. That preprocessing is where the signal dies.
+    </p>
+    <p>
+      <strong>Structure-centric clustering</strong> changes what is being measured. Cluster identity is encoded
+      not through point-to-point geometry but through the topological organization of points within their native
+      feature space &mdash; using a kNN graph as the substrate. The result is a family of algorithms whose
+      parameters are scale-invariant, whose validity metrics survive into the thousands of dimensions, and
+      whose deployment workflow scales linearly from a 1,000-point sample to a 500,000-point dataset.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-soft);">
+  <div class="container">
+    <div class="section-tag">Two Stacks, One Paradigm</div>
+    <h2>Choose the stack that fits your data.</h2>
+    <div class="card-grid mt-6">
+      <div class="card">
+        <div class="num">STACK · LOW-D</div>
+        <h3>SCOPE → AdaBox → SLCD</h3>
+        <p>
+          The complete two-dimensional pipeline. SCOPE diagnoses clustering quality across five components.
+          AdaBox produces structure-centric clusters with scale-invariant parameters. SLCD transfers parameters
+          from sample to full deployment. Strongest in any dimensionality where dimensionality reduction
+          (UMAP, PCA, t-SNE) precedes clustering &mdash; including the BERTopic pipeline used by every social listening
+          and trend detection platform in production today.
+        </p>
+        <a href="low-d.html" class="arrow">Examine the stack →</a>
+      </div>
+      <div class="card">
+        <div class="num">STACK · HIGH-D</div>
+        <h3>Graph-SCOPE → AdaGraph → DA-Sampler → SLCD</h3>
+        <p>
+          The native high-dimensional pipeline. Graph-SCOPE evaluates clustering quality at any
+          dimensionality without distance assumptions. AdaGraph clusters in 100&ndash;5,000+ dimensions
+          without any reduction. The Density-Aware Sampler preserves density structure. SLCD deploys to
+          half a million points. Strongest in domains where information lives in the native feature space:
+          gene expression, materials properties, multi-modal sensor data.
+        </p>
+        <a href="high-d.html" class="arrow">Examine the stack →</a>
+      </div>
+    </div>
+    <div class="callout mt-6">
+      <div class="pull">The high-dimensional stack is superior in high-dimensional applications. The low-dimensional stack is superior in low-dimensional applications. Structure-centric is superior in both.</div>
+      <div class="attribution">— A. Elmahdi · arXiv: 2603.13339</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">Cross-Domain Validation</div>
+    <h2>Three domains. <span class="em">Same advantage.</span></h2>
+    <div class="card-grid mt-6">
+      <div class="card">
+        <div class="num">01 · GENOMICS</div>
+        <h3>Cancer module discovery</h3>
+        <p>
+          On lung adenocarcinoma (246 patients) and hepatocellular carcinoma (431 patients), AdaGraph found gene
+          modules that WGCNA &mdash; the field's gold standard with 18,000+ citations &mdash; discarded entirely as
+          background. <strong>24 wins, 3 ties, 13 losses</strong> against four established competitors.
+        </p>
+        <a href="validation.html#genomics" class="arrow">See the genomics study →</a>
+      </div>
+      <div class="card">
+        <div class="num">02 · TEXT &amp; NLP</div>
+        <h3>Topic modeling at production scale</h3>
+        <p>
+          Across 20-Newsgroups subsets (n=5,581 to 17,901) and AG-News (n=7,600), AdaHD achieves 0.5015 average
+          ARI with 0% data loss versus 0.3516 for HDBSCAN with 23&ndash;36% noise rejection. SCOPE quality
+          score: 0.76 vs 0.30.
+        </p>
+        <a href="validation.html#text" class="arrow">See the text benchmark →</a>
+      </div>
+      <div class="card">
+        <div class="num">03 · MATERIALS SCIENCE</div>
+        <h3>Superconductor family discovery</h3>
+        <p>
+          On the SuperCon database (21,263 materials, 81 dimensions), AdaGraph identified 18 superconductor families
+          aligned with the known physical classification &mdash; BCS, iron-based, cuprate &mdash; with no
+          T꜀ supervision. K-Means+Silhouette returned k=2.
+        </p>
+        <a href="validation.html#materials" class="arrow">See the materials study →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">Status</div>
+    <h2>Patents filed. <span class="em">arXiv submitted.</span> Ready for partnership.</h2>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="num">5</div>
+        <div class="label">Patent applications</div>
+        <div class="desc">AdaBox, SCOPE filed Jan 2026. AdaGraph &amp; Graph-SCOPE prepared Apr 2026. Six independent claims.</div>
+      </div>
+      <div class="stat">
+        <div class="num">7</div>
+        <div class="label">Inventions in the family</div>
+        <div class="desc">The paradigm, AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD, Density-Aware Sampler.</div>
+      </div>
+      <div class="stat">
+        <div class="num">2603.13339</div>
+        <div class="label">arXiv preprint</div>
+        <div class="desc">Structure-Centric Density-Based Clustering with Scale-Invariant Parameters.</div>
+      </div>
+    </div>
+    <p class="mt-6">
+      Three commercial verticals are open: social listening &amp; trend detection (text), bioinformatics &amp; drug
+      discovery (genomics), materials informatics (high-dimensional scientific data). Licensing terms favor
+      reference customers.
+      &nbsp;<a href="about.html">Open a conversation →</a>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>Structure-Centric Machine Learning</h4>
+      <p class="credit">A research program by Ahmed Elmahdi, PhD<br/>
+      Inventor of AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD,<br/>
+      and the Density-Aware Sampler.</p>
+    </div>
+    <div>
+      <h4>The Stack</h4>
+      <ul>
+        <li><a href="paradigm.html">The Paradigm</a></li>
+        <li><a href="low-d.html">Low-Dimensional Stack</a></li>
+        <li><a href="high-d.html">High-Dimensional Stack</a></li>
+        <li><a href="validation.html">Cross-Domain Validation</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="roadmap.html">Research Roadmap</a></li>
+        <li><a href="publications.html">Publications &amp; Patents</a></li>
+        <li><a href="about.html">About &amp; Contact</a></li>
+        <li><a href="https://arxiv.org/abs/2603.13339">arXiv: 2603.13339</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">© 2026 &nbsp;·&nbsp; structurecentricml.com &nbsp;·&nbsp; All rights reserved</div>
+</footer>
+</body></html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The High-Dimensional Stack — Structure-Centric ML</title>
+<meta name="description" content="Structure-Centric Machine Learning: a new paradigm for native-dimensional clustering. AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand">Structure<span class="accent">·</span>Centric ML</a>
+    <nav>
+      <a href="paradigm.html"   >Paradigm</a>
+      <a href="low-d.html"      >Low-D Stack</a>
+      <a href="high-d.html"     class="current">High-D Stack</a>
+      <a href="validation.html" >Validation</a>
+      <a href="roadmap.html"    >Roadmap</a>
+      <a href="publications.html" >Publications</a>
+      <a href="about.html"      >About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="issue-plate">
+    <div>Field Note No. 04 &nbsp;·&nbsp; Structure-Centric ML</div>
+    <div class="right">arXiv: 2603.13339 &nbsp;·&nbsp; A. Elmahdi, PhD</div>
+  </div>
+  <div class="page-hero">
+    <div class="kicker">When the data lives in its native space, this is the stack.</div>
+    <h1>The High-Dimensional <span class="em">Stack.</span></h1>
+    <p class="lede">Four components — Graph-SCOPE, AdaGraph, the Density-Aware Sampler, and SLCD — operating together to produce structure-centric clusters in 100 to 5,000+ dimensions without any dimensionality reduction. The first complete clustering pipeline that survives the curse of dimensionality intact.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">The Stack</div>
+    <h2>Four components. <span class="em">Native dimensionality throughout.</span></h2>
+
+    <div class="stack mt-6">
+      <div class="layer">
+        <div class="num">01</div>
+        <div>
+          <h3>Graph-SCOPE</h3>
+          <div class="role">Unsupervised validity metric for high-dimensional clustering</div>
+          <p>
+            The first unsupervised clustering quality metric demonstrated to maintain discriminative
+            power at any dimensionality up to 5,000 features. Operates on a precomputed kNN graph &mdash;
+            no pairwise distance computation. Decomposable into five components: Modularity (60%),
+            Consistency (20%), Boundary (10%), Noise (5%), Balance (5%). <strong>Achieves 99.8% of oracle
+            k-selection performance across 10 benchmark datasets, where Silhouette achieves 92.7%.</strong>
+          </p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="num">02</div>
+        <div>
+          <h3>AdaGraph</h3>
+          <div class="role">Native high-dimensional structure-centric clustering algorithm</div>
+          <p>
+            The first clustering algorithm to operate effectively in unreduced feature spaces of
+            100&ndash;500+ dimensions without preprocessing through PCA, UMAP, or other dimensionality
+            reduction methods. Operates on a kNN graph constructed in the data's native feature space.
+            <strong>24&ndash;62% improvement in clustering quality (ARI) over HDBSCAN on real text and gene-expression
+            data, with zero data points discarded as noise.</strong>
+          </p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="num">03</div>
+        <div>
+          <h3>Density-Aware Sampler</h3>
+          <div class="role">Density-preserving sampling on the kNN graph</div>
+          <p>
+            A general-purpose sampling method that preserves the density structure of arbitrary datasets
+            through hill-climbing on a kNN graph with proportional budget allocation. Without this
+            sampler, parameter transfer across scales would fail because uniform random sampling
+            distorts density modes. <strong>Filed as an independent claim in the AdaGraph patent &mdash; usable
+            with any clustering algorithm.</strong>
+          </p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="num">04</div>
+        <div>
+          <h3>SLCD</h3>
+          <div class="role">Sample-Label-Calibrate-Deploy parameter transfer at extreme scale</div>
+          <p>
+            Tune AdaGraph parameters on a 1,000-point sample. Deploy those exact parameters to a
+            500,000-point dataset in 100 dimensions. Quality is preserved &mdash; mean Δ = 0.000 across
+            seven scaling tests on consumer hardware in under three minutes. Combined with the
+            Density-Aware Sampler, SLCD is the operational backbone of the entire stack.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">Evidence — Graph-SCOPE Scaling</div>
+    <h2>Where Silhouette collapses, <span class="em">Graph-SCOPE holds.</span></h2>
+    <p>
+      Silhouette is the standard unsupervised clustering metric used in scikit-learn, BERTopic, and
+      thousands of production ML pipelines. It is also one of the most well-known examples of a metric
+      that fails in high dimensions because it relies on pairwise Euclidean distances. The plot below
+      shows Kendall's τ &mdash; the rank correlation between each metric's score and the true clustering
+      quality &mdash; as data dimensionality grows from 2 to 5,000.
+    </p>
+
+    <figure>
+      <img src="assets/curated/graphscope_scaling.png" alt="Kendall tau vs dimensionality for Graph-SCOPE, Silhouette, Davies-Bouldin, and Calinski-Harabasz"/>
+      <figcaption>
+        <strong>Graph-SCOPE (blue) holds at τ ≈ 0.95 from 10 to 5,000 dimensions.</strong> Silhouette (red),
+        Davies-Bouldin (green), and Calinski-Harabasz (purple) all collapse below τ = 0.55 past
+        50 dimensions. Synthetic planted-structure benchmark with k=6 clusters in a 10D subspace
+        embedded in progressively larger ambient spaces.
+        <span class="src">Source: GraphSCOPE_Synthetic_Benchmark.ipynb (img-003)</span>
+      </figcaption>
+    </figure>
+
+    <div class="stat-grid mt-6">
+      <div class="stat">
+        <div class="num">0.95</div>
+        <div class="label">Graph-SCOPE τ at 5,000D</div>
+        <div class="desc">Maintains discriminative power at extreme dimensionality.</div>
+      </div>
+      <div class="stat">
+        <div class="num">0.46</div>
+        <div class="label">Silhouette τ at 5,000D</div>
+        <div class="desc">Collapses to near-random ranking.</div>
+      </div>
+      <div class="stat">
+        <div class="num">9 / 10</div>
+        <div class="label">Synthetic benchmarks won</div>
+        <div class="desc">vs Silhouette, Davies-Bouldin, Calinski-Harabasz.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">Evidence — Graph-SCOPE Curves</div>
+    <h2>The shape of a working metric.</h2>
+    <p>
+      A good unsupervised k-selection metric should peak at the true number of clusters. The plot below
+      shows score-versus-k curves across all 10 synthetic benchmark datasets. The dashed vertical line
+      marks the true k. <strong>Graph-SCOPE peaks at the true k on 9 of 10 datasets</strong>; competitors fail
+      systematically at higher dimensions and on imbalanced or anisotropic data.
+    </p>
+
+    <figure>
+      <img src="assets/curated/graphscope_curves.png" alt="CVI score curves across 10 synthetic datasets, comparing Graph-SCOPE Silhouette Davies-Bouldin Calinski-Harabasz"/>
+      <figcaption>
+        Score-versus-k curves for Graph-SCOPE (GS, blue), Silhouette (red), Davies-Bouldin (green),
+        and Calinski-Harabasz (purple) across 10 synthetic datasets. The grey curve is oracle ARI;
+        the dashed vertical line is the true k. <strong>Graph-SCOPE peaks at the correct k in 9 of 10
+        datasets &mdash; including Hard-100D, Planted-500D, and TightOvlp-100D where all three competitors
+        fail.</strong>
+        <span class="src">Source: GraphSCOPE_Synthetic_Benchmark.ipynb (img-001)</span>
+      </figcaption>
+    </figure>
+
+    <h3 style="margin-top: 48px; font-size: 26px;">Summary across 10 synthetic benchmarks</h3>
+    <table class="mt-4">
+      <thead>
+        <tr><th>Method</th><th class="num">Mean ARI</th><th class="num">Datasets won</th></tr>
+      </thead>
+      <tbody>
+        <tr class="bg-row"><td><strong>Graph-SCOPE</strong></td><td class="num win"><strong>0.900</strong></td><td class="num win"><strong>9 / 10</strong></td></tr>
+        <tr><td>Silhouette</td><td class="num">0.837</td><td class="num">1 / 10</td></tr>
+        <tr><td>Davies-Bouldin</td><td class="num">0.835</td><td class="num">0 / 10</td></tr>
+        <tr><td>Calinski-Harabasz</td><td class="num">0.450</td><td class="num">0 / 10</td></tr>
+        <tr><td colspan="3" style="border-bottom: none; padding-top: 16px;"><em>Oracle (knows true k):</em> 0.902</td></tr>
+      </tbody>
+    </table>
+    <p class="mt-4">
+      <strong>Graph-SCOPE achieves 99.8% of oracle performance.</strong> It is, in practice, as good at choosing k as
+      knowing the answer in advance.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">Decomposable by Design</div>
+    <h2>Five components. <span class="em">One diagnosable score.</span></h2>
+    <p>
+      Like SCOPE, Graph-SCOPE is decomposable. When clustering quality drops, the components reveal
+      which structural property is failing &mdash; modularity (community structure), consistency
+      (label stability across resampling), boundary integrity (correct edge handling), noise (unassigned
+      points), or balance (cluster size distribution).
+    </p>
+    <table class="mt-6">
+      <thead>
+        <tr><th>Component</th><th class="num">Weight</th><th>Diagnostic signal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Modularity</strong></td><td class="num">60%</td><td>Community structure on the kNN graph (Reichardt-Bornholdt formulation)</td></tr>
+        <tr><td><strong>Consistency</strong></td><td class="num">20%</td><td>Label stability across bootstrap resampling</td></tr>
+        <tr><td><strong>Boundary</strong></td><td class="num">10%</td><td>Edge integrity between adjacent clusters</td></tr>
+        <tr><td><strong>Noise</strong></td><td class="num">5%</td><td>Fraction of points unassigned</td></tr>
+        <tr><td><strong>Balance</strong></td><td class="num">5%</td><td>Distribution of cluster sizes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">When To Use This Stack</div>
+    <h2>The High-D stack is the strongest choice when&hellip;</h2>
+    <p>
+      &bull; The data has more than ~30 informative dimensions in its raw form.
+      <br/>&bull; Dimensionality reduction destroys interpretive structure (gene expression, materials properties, multi-modal sensor data).
+      <br/>&bull; The application requires labeling every data point with high confidence.
+      <br/>&bull; Datasets are large enough that re-tuning at scale is operationally prohibitive.
+      <br/>&bull; Discovery is the goal: finding patterns that did not exist before in any database.
+    </p>
+    <p>
+      For genomics, materials informatics, drug discovery, astronomy, and climate-science workflows,
+      the High-D stack is the only known clustering pipeline that operates correctly on the raw data
+      across all four operational axes: dimensionality, scale, completeness, and tunability.
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>Structure-Centric Machine Learning</h4>
+      <p class="credit">A research program by Ahmed Elmahdi, PhD<br/>
+      Inventor of AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD,<br/>
+      and the Density-Aware Sampler.</p>
+    </div>
+    <div>
+      <h4>The Stack</h4>
+      <ul>
+        <li><a href="paradigm.html">The Paradigm</a></li>
+        <li><a href="low-d.html">Low-Dimensional Stack</a></li>
+        <li><a href="high-d.html">High-Dimensional Stack</a></li>
+        <li><a href="validation.html">Cross-Domain Validation</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="roadmap.html">Research Roadmap</a></li>
+        <li><a href="publications.html">Publications &amp; Patents</a></li>
+        <li><a href="about.html">About &amp; Contact</a></li>
+        <li><a href="https://arxiv.org/abs/2603.13339">arXiv: 2603.13339</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">© 2026 &nbsp;·&nbsp; structurecentricml.com &nbsp;·&nbsp; All rights reserved</div>
+</footer>
+</body></html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Research Roadmap — Structure-Centric ML</title>
+<meta name="description" content="Structure-Centric Machine Learning: a new paradigm for native-dimensional clustering. AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand">Structure<span class="accent">·</span>Centric ML</a>
+    <nav>
+      <a href="paradigm.html"   >Paradigm</a>
+      <a href="low-d.html"      >Low-D Stack</a>
+      <a href="high-d.html"     >High-D Stack</a>
+      <a href="validation.html" >Validation</a>
+      <a href="roadmap.html"    class="current">Roadmap</a>
+      <a href="publications.html" >Publications</a>
+      <a href="about.html"      >About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="issue-plate">
+    <div>Field Note No. 06 &nbsp;·&nbsp; Structure-Centric ML</div>
+    <div class="right">arXiv: 2603.13339 &nbsp;·&nbsp; A. Elmahdi, PhD</div>
+  </div>
+  <div class="page-hero">
+    <div class="kicker">Seven scientific domains where native-dimensional clustering opens problems that were previously inaccessible.</div>
+    <h1>A research <span class="em">program.</span></h1>
+    <p class="lede">The structure-centric paradigm is not a single tool with applications — it is a foundational framework that enables a new class of scientific discoveries across multiple high-dimensional, discovery-driven fields. The roadmap below identifies seven such domains and the specific research questions that become tractable for the first time.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">Domain 01</div>
+    <h2>Cancer genomics &amp; <span class="em">precision oncology.</span></h2>
+    <p>
+      <strong>The bottleneck:</strong> Standard tools (WGCNA, hierarchical clustering with elbow methods)
+      discard 70&ndash;97% of gene expression data as background, hiding the disease-specific signals that
+      matter for patient stratification and biomarker discovery.
+    </p>
+    <p>
+      <strong>The opening:</strong> AdaGraph + SLCD enable native clustering of patient-level gene expression
+      across hundreds of dimensions. The lung adenocarcinoma study proved this concept on 246 patients;
+      a 10,000-patient TCGA pan-cancer analysis is a direct extension.
+    </p>
+    <p>
+      <strong>Priority directions:</strong> Tumor subtype discovery from primary tumor expression. Treatment
+      response prediction from pre-treatment biomarkers. Recurrence-risk module discovery in
+      currently understudied populations (never-smokers, pediatric cancers, rare malignancies).
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-soft);">
+  <div class="container">
+    <div class="section-tag">Domain 02</div>
+    <h2>Drug discovery &amp; <span class="em">target identification.</span></h2>
+    <p>
+      <strong>The bottleneck:</strong> The LINCS L1000 dataset characterizes drug effects through
+      transcriptional signatures across 978 landmark genes &times; thousands of drugs &times; multiple cell
+      lines. Existing methods cluster these signatures only after dimensionality reduction, losing the
+      precise mechanistic information that distinguishes related compounds.
+    </p>
+    <p>
+      <strong>The opening:</strong> Native high-dimensional clustering preserves the full transcriptional
+      signature, enabling identification of drug compounds that perturb the same molecular pathways
+      even when their structures differ.
+    </p>
+    <p>
+      <strong>Priority directions:</strong> Drug repurposing through transcriptional similarity. Off-target
+      effect identification through unexpected pathway clustering. Polypharmacology mapping.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">Domain 03</div>
+    <h2>Materials informatics &amp; <span class="em">discovery science.</span></h2>
+    <p>
+      <strong>The bottleneck:</strong> Materials databases (SuperCon, Materials Project, JARVIS-DFT, AFLOW)
+      contain millions of compositional and structural records. Existing pipelines either require expert
+      specification of clusters or produce trivial 2- to 4-cluster decompositions.
+    </p>
+    <p>
+      <strong>The opening:</strong> The SuperCon benchmark demonstrated that AdaGraph rediscovers known
+      physics-based families without supervision. The same approach applied to less-studied properties
+      (thermoelectric performance, photovoltaic efficiency, catalytic activity) becomes a discovery
+      tool for new materials families.
+    </p>
+    <p>
+      <strong>Priority directions:</strong> Battery cathode discovery. Photocatalyst family identification.
+      Novel superconductor candidates from composition alone. Mineral exploration through multi-modal
+      geological data clustering.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-soft);">
+  <div class="container">
+    <div class="section-tag">Domain 04</div>
+    <h2>Neuroscience &amp; <span class="em">connectomics.</span></h2>
+    <p>
+      <strong>The bottleneck:</strong> Single-cell RNA sequencing of brain tissue produces datasets with
+      tens of thousands of cells and 20,000+ genes per cell. Standard analysis pipelines require
+      aggressive PCA reduction before clustering, conflating cell types that differ in fewer than 50
+      genes.
+    </p>
+    <p>
+      <strong>The opening:</strong> Native high-dimensional clustering preserves rare-cell-type signals.
+      Functional connectivity analysis of fMRI data &mdash; where each region's connectivity to every
+      other region is a feature &mdash; benefits from the same property.
+    </p>
+    <p>
+      <strong>Priority directions:</strong> Rare neuron subtype discovery. Functional brain network
+      identification. Disease-state vs healthy-state discrimination in neurodegenerative diseases.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">Domain 05</div>
+    <h2>Climate science &amp; <span class="em">earth observation.</span></h2>
+    <p>
+      <strong>The bottleneck:</strong> Climate models output gridded data with hundreds of variables per
+      grid cell. Identifying climate regimes, ENSO phases, or extreme-event clusters requires
+      multi-decadal analysis at high resolution &mdash; producing datasets too large and too
+      high-dimensional for standard clustering.
+    </p>
+    <p>
+      <strong>The opening:</strong> SLCD parameter transfer from sample regions to global grids enables
+      consistent clustering at planetary scale.
+    </p>
+    <p>
+      <strong>Priority directions:</strong> Climate regime classification. Extreme weather event clustering.
+      Drought-typology mapping. Marine heatwave structure discovery.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-soft);">
+  <div class="container">
+    <div class="section-tag">Domain 06</div>
+    <h2>Astronomy &amp; <span class="em">cosmological survey data.</span></h2>
+    <p>
+      <strong>The bottleneck:</strong> Sky surveys (Gaia, Rubin/LSST, JWST) catalog billions of objects
+      with photometric, spectral, and astrometric features. Identifying stellar populations,
+      galaxy types, or transient event classes requires clustering at population scale in feature
+      spaces of hundreds of dimensions.
+    </p>
+    <p>
+      <strong>The opening:</strong> Graph-SCOPE provides an unsupervised quality signal for k-selection
+      where Silhouette fails. AdaGraph clusters objects in their native multi-band photometric space.
+    </p>
+    <p>
+      <strong>Priority directions:</strong> Stellar stream identification in Gaia data. Galaxy
+      morphological discovery. Transient event taxonomy from time-series features.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">Domain 07</div>
+    <h2>Epidemiology &amp; <span class="em">public health.</span></h2>
+    <p>
+      <strong>The bottleneck:</strong> Disease outbreak analysis combines demographic, geographic, clinical,
+      and genetic features per case. Identifying transmission clusters, outbreak strains, or
+      population-level risk patterns requires methods that handle this multi-modal high-dimensional
+      structure.
+    </p>
+    <p>
+      <strong>The opening:</strong> AdaGraph's native multi-modal clustering identifies disease subtypes
+      and outbreak signatures that emerge only when all features are considered jointly.
+    </p>
+    <p>
+      <strong>Priority directions:</strong> Infectious disease subtype discovery from genomic-clinical data
+      fusion. Outbreak source attribution. Long-term sequela clustering (e.g., long-COVID phenotypes).
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">The Through-Line</div>
+    <h2>One method, <span class="em">seven discovery problems.</span></h2>
+    <p>
+      Every domain on this roadmap has the same structural form: <strong>high-dimensional, ambiguous,
+      sparse, multi-modal data, with discovery as the goal.</strong> The structure-centric paradigm was
+      designed precisely for this class of problem. Every domain is independently large; collectively,
+      they define a research program that could occupy a research lab for a decade.
+    </p>
+    <p>
+      A research lab with three to five PhD students operating across two to three of these domains
+      simultaneously, with the structure-centric stack as foundational infrastructure, would produce
+      a body of papers and discoveries that establish the paradigm as a permanent contribution to
+      computational science.
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>Structure-Centric Machine Learning</h4>
+      <p class="credit">A research program by Ahmed Elmahdi, PhD<br/>
+      Inventor of AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD,<br/>
+      and the Density-Aware Sampler.</p>
+    </div>
+    <div>
+      <h4>The Stack</h4>
+      <ul>
+        <li><a href="paradigm.html">The Paradigm</a></li>
+        <li><a href="low-d.html">Low-Dimensional Stack</a></li>
+        <li><a href="high-d.html">High-Dimensional Stack</a></li>
+        <li><a href="validation.html">Cross-Domain Validation</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="roadmap.html">Research Roadmap</a></li>
+        <li><a href="publications.html">Publications &amp; Patents</a></li>
+        <li><a href="about.html">About &amp; Contact</a></li>
+        <li><a href="https://arxiv.org/abs/2603.13339">arXiv: 2603.13339</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">© 2026 &nbsp;·&nbsp; structurecentricml.com &nbsp;·&nbsp; All rights reserved</div>
+</footer>
+</body></html>

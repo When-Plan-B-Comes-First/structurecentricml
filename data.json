@@ -1,0 +1,42 @@
+{
+  "site": {
+    "name": "Structure-Centric Machine Learning",
+    "tagline": "A new paradigm for native-dimensional clustering",
+    "domain": "structurecentricml.com",
+    "author": "Ahmed Elmahdi, PhD",
+    "arxiv": "2603.13339",
+    "email": "ahmed@structurecentricml.com"
+  },
+  "text_benchmark": {
+    "averages": {
+      "hdbscan_ari":   0.3516,
+      "hdbscan_t_ari": 0.3611,
+      "ada2d_ari":     0.4261,
+      "adahd_ari":     0.5015,
+      "hdbscan_scope":   0.3017,
+      "hdbscan_t_scope": 0.3595,
+      "ada2d_scope":     0.5766,
+      "adahd_scope":     0.7604
+    }
+  },
+  "genomics": {
+    "lung_GSE31210": {
+      "n_patients": 246, "dimensions": 246,
+      "scorecard": {"wins": 24, "ties": 3, "losses": 13},
+      "wgcna_background_pct": 76.3,
+      "c6_module_genes": 44,
+      "literature_validation_contradictions": 0
+    },
+    "liver_GSE14520": {
+      "n_patients": 431, "n_genes": 10000,
+      "modules": 4, "module_sizes": [1062, 360, 2048, 6530],
+      "wgcna_background_pct": 96.9
+    }
+  },
+  "materials": {
+    "supercon": {
+      "n_materials": 21263, "dimensions": 81,
+      "adagraph_k": 18, "adagraph_noise_pct": 0.0
+    }
+  }
+}

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Cross-Domain Validation — Structure-Centric ML</title>
+<meta name="description" content="Structure-Centric Machine Learning: a new paradigm for native-dimensional clustering. AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand">Structure<span class="accent">·</span>Centric ML</a>
+    <nav>
+      <a href="paradigm.html"   >Paradigm</a>
+      <a href="low-d.html"      >Low-D Stack</a>
+      <a href="high-d.html"     >High-D Stack</a>
+      <a href="validation.html" class="current">Validation</a>
+      <a href="roadmap.html"    >Roadmap</a>
+      <a href="publications.html" >Publications</a>
+      <a href="about.html"      >About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="issue-plate">
+    <div>Field Note No. 05 &nbsp;·&nbsp; Structure-Centric ML</div>
+    <div class="right">arXiv: 2603.13339 &nbsp;·&nbsp; A. Elmahdi, PhD</div>
+  </div>
+  <div class="page-hero">
+    <div class="kicker">One paradigm. Three independent scientific domains. The same structural advantages.</div>
+    <h1>Cross-domain <span class="em">validation.</span></h1>
+    <p class="lede">Genomics, materials science, and natural language processing share no surface similarity. But they share the same underlying mathematical problem — finding structure in high-dimensional, ambiguous, sometimes sparse data — and structure-centric methods solve it the same way in all three.</p>
+  </div>
+</div>
+
+<section class="section" id="genomics">
+  <div class="container">
+    <div class="section-tag">Domain 01 — Cancer Genomics</div>
+    <h2>Gene module discovery the gold standard <span class="em">missed.</span></h2>
+    <p>
+      Gene co-expression module discovery is one of the foundational tasks in cancer genomics.
+      <strong>WGCNA</strong> &mdash; the field's most-cited tool, with over 18,000 academic citations &mdash;
+      has been the standard since 2008. WGCNA assigns each gene to a co-expression module or to a
+      "background" pool that the algorithm cannot interpret.
+    </p>
+
+    <h3 style="margin-top: 40px; font-size: 26px;">Lung adenocarcinoma — GSE31210 (n = 246 patients, 246 dimensions)</h3>
+    <p>
+      The combined head-to-head scorecard against four established methods (WGCNA, K-Means, Ward, HDBSCAN):
+      <strong>24 wins, 3 ties, 13 losses</strong> across 40 head-to-head comparisons spanning multiple
+      quality and biological-coherence metrics. Most importantly: WGCNA placed 76.3% of genes into its
+      uninterpretable "background" pool. AdaGraph clustered 100% of genes into 12 modules.
+    </p>
+    <p>
+      AdaGraph identified a <strong>44-gene smoking-relapse interaction module</strong> (cluster C6) in the
+      lung cancer dataset that WGCNA distributed across its background pool, recovering only 2 of the 44
+      genes. An independent literature validation of every gene-cluster assignment found
+      <strong>zero contradictions</strong> with established cancer biology, and identified 5 novel candidate
+      genes for experimental follow-up: LOC101060363, TMA7, IRF2BPL, RPS4XP2, MIR6805.
+    </p>
+
+    <h3 style="margin-top: 40px; font-size: 26px;">Hepatocellular carcinoma — GSE14520 (n = 431 patients, 10,000 genes)</h3>
+    <figure>
+      <img src="assets/curated/genomics_modules_umap.png" alt="AdaHD gene co-expression modules in GSE14520 hepatocellular carcinoma"/>
+      <figcaption>
+        AdaHD identified four gene co-expression modules with 0% noise: C0 (1,062 genes), C1 (360 genes),
+        C2 (2,048 genes), C3 (6,530 genes). WGCNA placed 96.9% of genes into its background pool on this
+        dataset.
+        <span class="src">Source: Gene_Discovery_AdaHD_GSE14520.ipynb (img-002)</span>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="assets/curated/genomics_expression_heatmap.png" alt="Gene cluster expression profiles across patient groups"/>
+      <figcaption>
+        Mean expression and relative enrichment per cluster across four patient groups
+        (NonTumor-NoRecur, NonTumor-Recur, Tumor-NoRecur, Tumor-Recur). <strong>Cluster C2
+        (2,048 genes) shows the Tissue × Recurrence interaction signature; WGCNA recovered only 41 of
+        these genes.</strong>
+        <span class="src">Source: Gene_Discovery_AdaHD_GSE14520.ipynb (img-003)</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" id="text" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">Domain 02 — Text &amp; NLP</div>
+    <h2>The BERTopic pipeline, made <span class="em">three times more accurate.</span></h2>
+    <p>
+      Text clustering at production scale runs on the BERTopic pipeline: sentence-BERT embeddings,
+      UMAP reduction, density-based clustering. The benchmark below tests four clustering options on
+      this exact pipeline across four real-world datasets.
+    </p>
+
+    <figure>
+      <img src="assets/curated/text_metrics_grouped.png" alt="Quality metrics across 4 datasets and 4 methods"/>
+      <figcaption>
+        Eight quality metrics (ARI, NMI, AMI, V-Measure, FM, Homogeneity, Completeness, SCOPE) across
+        four real text datasets. AdaHD (green) wins SCOPE on every dataset and ARI on three of four.
+        <span class="src">Source: Multi_Dataset_Text_Benchmark.ipynb (img-001)</span>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="assets/curated/text_agnews_scatter.png" alt="AG-News UMAP scatter, ground truth vs HDBSCAN vs HDBSCAN* vs Ada2D vs AdaHD"/>
+      <figcaption>
+        AG-News, 4 categories, n=7,600. <strong>HDBSCAN finds k=5 with 4% noise (ARI 0.543); HDBSCAN* fragments
+        to k=29 with 26% noise (ARI 0.186); Ada2D finds k=3 (under-clusters); AdaHD finds k=4 with 0% noise
+        (ARI 0.445).</strong> AdaHD recovers the correct cluster count exactly.
+        <span class="src">Source: Multi_Dataset_Text_Benchmark.ipynb (img-006)</span>
+      </figcaption>
+    </figure>
+
+    <h3 style="margin-top: 40px; font-size: 26px;">Average across all four datasets</h3>
+    <table class="mt-4">
+      <thead>
+        <tr><th>Method</th><th class="num">Avg ARI</th><th class="num">Avg SCOPE</th></tr>
+      </thead>
+      <tbody>
+        <tr class="bg-row"><td><strong>AdaHD (high-D structure-centric)</strong></td><td class="num win"><strong>0.5015</strong></td><td class="num win"><strong>0.7604</strong></td></tr>
+        <tr><td>Ada2D (low-D structure-centric)</td><td class="num">0.4261</td><td class="num">0.5766</td></tr>
+        <tr><td>HDBSCAN* (parameter-tuned)</td><td class="num">0.3611</td><td class="num">0.3595</td></tr>
+        <tr><td>HDBSCAN (BERTopic default)</td><td class="num">0.3516</td><td class="num">0.3017</td></tr>
+      </tbody>
+    </table>
+    <p class="mt-4">
+      <strong>The structure-centric methods occupy the top two slots on both metrics.</strong> The improvement
+      is largest on SCOPE because SCOPE rewards correct cluster count, zero noise loss, and clean
+      boundaries &mdash; structural properties that distance-based methods cannot achieve.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="materials">
+  <div class="container">
+    <div class="section-tag">Domain 03 — Materials Science</div>
+    <h2>Superconductor families, <span class="em">rediscovered without supervision.</span></h2>
+    <p>
+      The SuperCon database catalogs 21,263 known superconductors with their compositional features and
+      critical temperatures (T<sub>c</sub>). Materials scientists have classified these into families
+      &mdash; conventional/BCS, iron-based, cuprate, and hydride &mdash; through decades of physical
+      and chemical analysis. The benchmark below treats the dataset as if T<sub>c</sub> were unknown,
+      asking the algorithms to discover families purely from compositional structure.
+    </p>
+
+    <figure>
+      <img src="assets/curated/materials_quality_comparison.png" alt="SuperCon superconductors algorithm quality comparison: Graph-SCOPE, Silhouette, Davies-Bouldin"/>
+      <figcaption>
+        Quality metric comparison on SuperCon (n=8,000 subsample, 81 dimensions). <strong>HDBSCAN earns the
+        highest Graph-SCOPE score &mdash; but does so by fragmenting the data into 152 micro-clusters and
+        discarding 40% as noise.</strong> AdaGraph-GS earns 0.859 with 18 physically meaningful clusters and
+        0% data discarded.
+        <span class="src">Source: MaterialsScience_AdaGraph_Benchmark.ipynb (img-002)</span>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="assets/curated/materials_tc_per_cluster.png" alt="AdaGraph cluster Tc distribution and PCA projection"/>
+      <figcaption>
+        <strong>AdaGraph identified 18 superconductor clusters whose mean T<sub>c</sub> distributions align
+        with the known physical classification</strong> &mdash; conventional/BCS at the low end, iron-based and
+        cuprate families at higher T<sub>c</sub>, with the highest-T<sub>c</sub> cuprate family reaching 137 K.
+        <strong>The algorithm received no T<sub>c</sub> information during clustering.</strong>
+        <span class="src">Source: MaterialsScience_AdaGraph_Benchmark.ipynb (img-003)</span>
+      </figcaption>
+    </figure>
+
+    <h3 style="margin-top: 40px; font-size: 26px;">Quality versus interpretability trade-off</h3>
+    <table class="mt-4">
+      <thead>
+        <tr><th>Method</th><th class="num">k</th><th class="num">Noise %</th><th class="num">Graph-SCOPE</th><th>Result</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>K-Means + Silhouette</td><td class="num">2</td><td class="num">0%</td><td class="num">0.510</td><td class="loss">Uninformative</td></tr>
+        <tr><td>K-Means + Graph-SCOPE</td><td class="num">20</td><td class="num">0%</td><td class="num">0.844</td><td>Needs k externally</td></tr>
+        <tr><td>HDBSCAN</td><td class="num">152</td><td class="num">40.1%</td><td class="num">0.938</td><td class="loss">Fragmented; 40% discarded</td></tr>
+        <tr><td>Ward + Graph-SCOPE</td><td class="num">19</td><td class="num">0%</td><td class="num">0.866</td><td>Hierarchical, no noise model</td></tr>
+        <tr class="bg-row"><td><strong>AdaGraph-GS (SLCD)</strong></td><td class="num"><strong>18</strong></td><td class="num win"><strong>0%</strong></td><td class="num">0.859</td><td class="win"><strong>Self-contained, parameter-free, fully assigned</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout mt-6">
+      <div class="pull">AdaGraph-GS is the only method that explores an unknown materials dataset, automatically determines how many physical families exist, assigns every material to one, and provides a quality score — all without domain knowledge or hyperparameter tuning.</div>
+      <div class="attribution">— On the SuperCon benchmark</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-soft);">
+  <div class="container">
+    <div class="section-tag">The Pattern</div>
+    <h2>One paradigm, three domains, <span class="em">consistent advantage.</span></h2>
+    <p>
+      The cross-domain pattern is what makes the structure-centric paradigm credible as a paradigm rather
+      than a single useful tool. In genomics, the gold standard discards three-quarters of the input. In
+      text, the standard pipeline discards a third of the signals. In materials science, distance-based
+      methods either return uninformative answers (k=2) or fragment the data into uninterpretable
+      micro-clusters. <strong>The same structural method outperforms all of them, in all three domains, by
+      addressing the same underlying limitation.</strong>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>Structure-Centric Machine Learning</h4>
+      <p class="credit">A research program by Ahmed Elmahdi, PhD<br/>
+      Inventor of AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD,<br/>
+      and the Density-Aware Sampler.</p>
+    </div>
+    <div>
+      <h4>The Stack</h4>
+      <ul>
+        <li><a href="paradigm.html">The Paradigm</a></li>
+        <li><a href="low-d.html">Low-Dimensional Stack</a></li>
+        <li><a href="high-d.html">High-Dimensional Stack</a></li>
+        <li><a href="validation.html">Cross-Domain Validation</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="roadmap.html">Research Roadmap</a></li>
+        <li><a href="publications.html">Publications &amp; Patents</a></li>
+        <li><a href="about.html">About &amp; Contact</a></li>
+        <li><a href="https://arxiv.org/abs/2603.13339">arXiv: 2603.13339</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">© 2026 &nbsp;·&nbsp; structurecentricml.com &nbsp;·&nbsp; All rights reserved</div>
+</footer>
+</body></html>

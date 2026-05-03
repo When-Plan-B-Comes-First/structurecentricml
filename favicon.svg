@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#F4EDE0"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'Iowan Old Style', serif"
+        font-size="32" font-weight="700" fill="#1A1814">
+    S<tspan fill="#B8412C">·</tspan>C
+  </text>
+</svg>

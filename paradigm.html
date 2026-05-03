@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Paradigm — Structure-Centric ML</title>
+<meta name="description" content="Structure-Centric Machine Learning: a new paradigm for native-dimensional clustering. AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand">Structure<span class="accent">·</span>Centric ML</a>
+    <nav>
+      <a href="paradigm.html"   class="current">Paradigm</a>
+      <a href="low-d.html"      >Low-D Stack</a>
+      <a href="high-d.html"     >High-D Stack</a>
+      <a href="validation.html" >Validation</a>
+      <a href="roadmap.html"    >Roadmap</a>
+      <a href="publications.html" >Publications</a>
+      <a href="about.html"      >About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="issue-plate">
+    <div>Field Note No. 02 &nbsp;·&nbsp; Structure-Centric ML</div>
+    <div class="right">arXiv: 2603.13339 &nbsp;·&nbsp; A. Elmahdi, PhD</div>
+  </div>
+  <div class="page-hero">
+    <div class="kicker">Three decades of density-based clustering have rested on the wrong primitive.</div>
+    <h1>Structure, not <span class="em">distance.</span></h1>
+    <p class="lede">Density-based clustering — DBSCAN (1996), HDBSCAN (2013), and their descendants — encode cluster identity through point-to-point geometric distance. Structure-Centric clustering encodes cluster identity through topological organization within the data's native feature space.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">The Distance Trap</div>
+    <h2>Why thirty-year-old clustering fails on modern data.</h2>
+    <p>
+      In low dimensions, <strong>distance is meaningful</strong>. Two points being three units apart in a
+      two-dimensional plane carries information about their similarity. Distance-based clustering
+      methods exploit this fact &mdash; DBSCAN's ε-neighborhoods, HDBSCAN's mutual-reachability distance,
+      hierarchical clustering's pairwise distances. They all measure geometry.
+    </p>
+    <p>
+      In high dimensions, <strong>this assumption breaks</strong>. As dimensionality grows past a few dozen, every
+      point becomes roughly equidistant from every other point. The variance of pairwise distances
+      collapses relative to the mean &mdash; the so-called <em>concentration of measure</em> phenomenon.
+      Geometric similarity becomes meaningless.
+    </p>
+    <p>
+      The standard workaround is <strong>dimensionality reduction</strong>: compress the data to two or
+      ten dimensions with UMAP, PCA, or t-SNE, then apply a distance-based clustering method to the
+      reduced space. This is the BERTopic pipeline. This is how every social listening platform works.
+      <strong>And every step of compression destroys the structural information that defines the clusters.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-deep);">
+  <div class="container">
+    <div class="section-tag">The Structural Reframe</div>
+    <h2>What if cluster identity were encoded <span class="em">topologically?</span></h2>
+    <p>
+      Structure-centric clustering replaces the question <em>"how far apart are two points?"</em> with
+      a different question: <em>"how are points organized within a graph defined by their nearest
+      neighbors?"</em>
+    </p>
+    <p>
+      Once the data has been embedded into a kNN graph, distances are no longer needed. What matters is
+      the topology &mdash; which points are connected to which, which regions form dense subgraphs, where the
+      boundaries between communities lie. The kNN graph captures local structure faithfully even in 5,000
+      dimensions, because it only needs to identify each point's nearest neighbors, not measure absolute distances.
+    </p>
+    <div class="callout">
+      <div class="pull">Cluster identity should be a property of how points are connected, not how far apart they are.</div>
+      <div class="attribution">— The structure-centric thesis</div>
+    </div>
+    <p>
+      From this reframe, three properties follow that no distance-based method can match. <strong>First,
+      parameters become scale-invariant</strong>. Because cluster identity is structural, the same parameters
+      that work on a 1,000-point sample work on a 1,000,000-point dataset &mdash; they describe a topological property,
+      not a metric distance. <strong>Second, every point gets assigned to a cluster</strong>. There is no need for
+      a noise category, because the topological organization is unambiguous even at boundary regions.
+      <strong>Third, validity metrics survive into thousands of dimensions</strong>, because they too operate on the
+      kNN graph, not on pairwise distances.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-tag">A Lineage</div>
+    <h2>Where this fits in clustering history.</h2>
+    <table class="mt-6">
+      <thead>
+        <tr>
+          <th>Era</th>
+          <th>Method</th>
+          <th>Primitive</th>
+          <th>Native dim.</th>
+          <th>Discards data?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1967</td>
+          <td>K-Means (MacQueen)</td>
+          <td>Euclidean centroid distance</td>
+          <td class="num">Low</td>
+          <td>No (forces all points)</td>
+        </tr>
+        <tr>
+          <td>1996</td>
+          <td>DBSCAN (Ester et al.)</td>
+          <td>ε-neighborhood density</td>
+          <td class="num">Low</td>
+          <td class="loss">Yes (noise)</td>
+        </tr>
+        <tr>
+          <td>2013</td>
+          <td>HDBSCAN (Campello et al.)</td>
+          <td>Mutual reachability distance</td>
+          <td class="num">Low</td>
+          <td class="loss">Yes (noise)</td>
+        </tr>
+        <tr class="bg-row">
+          <td>2026</td>
+          <td><strong>Structure-Centric (Elmahdi)</strong></td>
+          <td><strong>kNN graph topology</strong></td>
+          <td class="num win"><strong>5,000+</strong></td>
+          <td class="win"><strong>No</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mt-6">
+      Each era of clustering has been defined by a primitive &mdash; a fundamental quantity the algorithm
+      operates on. K-Means measured centroid distance. DBSCAN measured neighborhood density.
+      HDBSCAN measured mutual reachability. <strong>Structure-Centric methods measure graph topology.</strong>
+      The shift in primitive enables the shift in capability.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-soft);">
+  <div class="container">
+    <div class="section-tag">Two Stacks</div>
+    <h2>The paradigm comes in two forms.</h2>
+    <p>
+      The structure-centric paradigm has produced two complete clustering stacks &mdash; one for low-dimensional
+      data, one for native high-dimensional data. They share the same philosophy but differ in
+      implementation. Each is superior in its regime.
+    </p>
+    <div class="card-grid mt-6">
+      <div class="card">
+        <div class="num">LOW-D STACK</div>
+        <h3>SCOPE → AdaBox → SLCD</h3>
+        <p>
+          For data that has been (or will be) reduced to two dimensions. Includes the BERTopic pipeline,
+          UMAP-then-cluster workflows, and any case where dimensionality reduction is appropriate.
+        </p>
+        <a href="low-d.html" class="arrow">See the low-D stack →</a>
+      </div>
+      <div class="card">
+        <div class="num">HIGH-D STACK</div>
+        <h3>Graph-SCOPE → AdaGraph → DA-Sampler → SLCD</h3>
+        <p>
+          For data that lives in its native high-dimensional space. Gene expression, materials properties,
+          multi-modal scientific data &mdash; anywhere reduction destroys signal.
+        </p>
+        <a href="high-d.html" class="arrow">See the high-D stack →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>Structure-Centric Machine Learning</h4>
+      <p class="credit">A research program by Ahmed Elmahdi, PhD<br/>
+      Inventor of AdaBox, AdaGraph, SCOPE, Graph-SCOPE, SLCD,<br/>
+      and the Density-Aware Sampler.</p>
+    </div>
+    <div>
+      <h4>The Stack</h4>
+      <ul>
+        <li><a href="paradigm.html">The Paradigm</a></li>
+        <li><a href="low-d.html">Low-Dimensional Stack</a></li>
+        <li><a href="high-d.html">High-Dimensional Stack</a></li>
+        <li><a href="validation.html">Cross-Domain Validation</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="roadmap.html">Research Roadmap</a></li>
+        <li><a href="publications.html">Publications &amp; Patents</a></li>
+        <li><a href="about.html">About &amp; Contact</a></li>
+        <li><a href="https://arxiv.org/abs/2603.13339">arXiv: 2603.13339</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">© 2026 &nbsp;·&nbsp; structurecentricml.com &nbsp;·&nbsp; All rights reserved</div>
+</footer>
+</body></html>
