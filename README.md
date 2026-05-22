@@ -194,4 +194,4 @@ When extending the site, follow the patterns in existing pages — `kicker` ital
 
 ---
 
-© 2026 Ahmed Elmahdi, PhD · arXiv: 2603.13339
+© 2026 Ahmed Elmahdi, PhD · arXiv: 2605.16320
