@@ -157,14 +157,14 @@ To replace a benchmark figure with a newer notebook output, drop the new PNG int
 All quantitative claims on the site reference the data in `data.json`, which was extracted directly from your nine benchmark notebooks. Key verified numbers:
 
 - **Text benchmark (4 datasets, sentence-BERT + UMAP):**
-  - AdaHD avg ARI = **0.5015** (best); avg SCOPE = **0.7604**
-  - Ada2D avg ARI = 0.4261; avg SCOPE = 0.5766
+  - AdaGraph avg ARI = **0.5015** (best); avg SCOPE = **0.7604**
+  - AdaBox avg ARI = 0.4261; avg SCOPE = 0.5766
   - HDBSCAN* (tuned) avg ARI = 0.3611
   - HDBSCAN (default) avg ARI = 0.3516
 
 - **20NG-6cat takeaway slide:**
   - HDBSCAN: k=64, 30.4% noise, ARI = 0.464
-  - AdaHD: k=7, 0% noise, ARI = 0.751
+  - AdaGraph: k=7, 0% noise, ARI = 0.751
 
 - **Graph-SCOPE synthetic benchmark:** 9 of 10 datasets won; 99.8% of oracle k-selection performance.
 
