@@ -180,6 +180,30 @@
   </div>
 </section>
 
+<section class="section" style="background: var(--paper-soft);">
+  <div class="container">
+    <div class="section-tag">Try It</div>
+    <h2>Run it yourself.</h2>
+    <p style="max-width: 60ch;">
+      Both stacks are open source. The repository includes the algorithms, the benchmark
+      datasets, and the notebooks that produced every figure on this site — including the
+      negative results.
+    </p>
+    <pre style="background: var(--ink); color: var(--paper); padding: 20px 24px;
+                border-radius: 4px; overflow-x: auto; margin: 28px 0;
+                font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.9rem;">
+pip install --upgrade git+https://github.com/When-Plan-B-Comes-First/scml.git</pre>
+    <pre style="background: var(--paper-deep); color: var(--ink); padding: 20px 24px;
+                border-radius: 4px; overflow-x: auto; margin: 0 0 28px;
+                font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.9rem;">
+from scml.lowd  import SLCD, AdaBox, scope_score
+from scml.highd import SLCD as HighD_SLCD, AdaGraph
+
+labels = SLCD().fit_predict(X, y)</pre>
+    <p><a href="https://github.com/YOUR-ORG/scml">View the repository →</a></p>
+  </div>
+</section>
+
 <section class="section" style="background: var(--paper-deep);">
   <div class="container">
     <div class="section-tag">Status</div>
